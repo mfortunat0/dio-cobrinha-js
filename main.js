@@ -45,6 +45,13 @@ function iniciaJogo(){
   if(snake[0].y > 15 * box && direction === "down") snake[0].y = 0
   if(snake[0].y < 0 && direction === "up") snake[0].y = 16 * box
 
+  for(let c = 1; c < snake.length; c++){
+    if(snake[0].x === snake[c].x && snake[0].y === snake[c].y){
+      clearInterval(jogo)
+      alert("Game Over")
+    }
+  }
+
   criarBG()
   criarCobrinha()
   drawFood()
@@ -57,7 +64,13 @@ function iniciaJogo(){
   if(direction === "up") snakeY -= box
   if(direction === "down") snakeY += box
 
-  snake.pop();
+  if(snakeX !== food.x || snakeY !== food.y){
+    snake.pop()
+  }
+  else {
+      food.x = Math.floor(Math.random() * 15 + 1) * box,
+      food.y = Math.floor(Math.random() * 15 + 1) * box
+  }
 
   let newHead = {
     x: snakeX,
@@ -68,5 +81,3 @@ function iniciaJogo(){
 }
 
 let jogo = setInterval(iniciaJogo, 100);
-
-iniciaJogo()
